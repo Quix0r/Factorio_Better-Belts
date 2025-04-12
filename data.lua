@@ -285,6 +285,8 @@ function BetterBelts_addTechnology(thisName,thisIcon,thisType,thisEffect,thisPre
 			{"production-science-pack", 1},
 			{"utility-science-pack", 1}
 		}
+	else
+		log(string.format("[BetterBelts_addTechnology]: thisIngredients=%d is not supported for thisName='%s'", thisIngredients, thisName))
 	end
 	obj.unit.time = thisTime
 	obj.order = thisOrder
