@@ -1,14 +1,11 @@
---CODE
-BB = {}
-BB.modName = "BetterBelts"
-BB.baseGraphicsIcons = "__".. BB.modName .. "__/graphics/icons/"
-BB.baseGraphicsEntity = "__" .. BB.modName .. "__/graphics/entity/"
+---@type table<string,string> Mod information
+local BB = require("libs/bb")
 
 ---------------------- Ultra BELT PICTURES
-ultra_belt_filename = BB.baseGraphicsEntity .. "ultra-transport-belt.png"
+belt_filename = BB.baseGraphicsEntity .. BB.type .. "-transport-belt.png"
 
-ultra_belt_horizontal = {
-	filename = ultra_belt_filename,
+belt_horizontal = {
+	filename = belt_filename,
 	priority = "extra-high",
 	width = 80,
 	height = 80,
@@ -16,8 +13,8 @@ ultra_belt_horizontal = {
 	line_length = 16,
 	scale = 0.5
 }
-ultra_belt_vertical = {
-	filename = ultra_belt_filename,
+belt_vertical = {
+	filename = belt_filename,
 	priority = "extra-high",
 	width = 80,
 	height = 80,
@@ -26,8 +23,8 @@ ultra_belt_vertical = {
 	y = 160,
 	scale = 0.5
 }
-ultra_belt_ending_top = {
-	filename = ultra_belt_filename,
+belt_ending_top = {
+	filename = belt_filename,
 	priority = "extra-high",
 	width = 80,
 	height = 80,
@@ -36,8 +33,8 @@ ultra_belt_ending_top = {
 	y = 320,
 	scale = 0.5
 }
-ultra_belt_ending_bottom = {
-	filename = ultra_belt_filename,
+belt_ending_bottom = {
+	filename = belt_filename,
 	priority = "extra-high",
 	width = 80,
 	height = 80,
@@ -46,8 +43,8 @@ ultra_belt_ending_bottom = {
 	y = 480,
 	scale = 0.5
 }
-ultra_belt_ending_side = {
-	filename = ultra_belt_filename,
+belt_ending_side = {
+	filename = belt_filename,
 	priority = "extra-high",
 	width = 80,
 	height = 80,
@@ -56,8 +53,8 @@ ultra_belt_ending_side = {
 	y = 640,
 	scale = 0.5
 }
-ultra_belt_starting_top = {
-	filename = ultra_belt_filename,
+belt_starting_top = {
+	filename = belt_filename,
 	priority = "extra-high",
 	width = 80,
 	height = 80,
@@ -66,8 +63,8 @@ ultra_belt_starting_top = {
 	y = 800,
 	scale = 0.5
 }
-ultra_belt_starting_bottom = {
-	filename = ultra_belt_filename,
+belt_starting_bottom = {
+	filename = belt_filename,
 	priority = "extra-high",
 	width = 80,
 	height = 80,
@@ -76,8 +73,8 @@ ultra_belt_starting_bottom = {
 	y = 960,
 	scale = 0.5
 }
-ultra_belt_starting_side = {
-	filename = ultra_belt_filename,
+belt_starting_side = {
+	filename = belt_filename,
 	priority = "extra-high",
 	width = 40,
 	height = 40,
@@ -87,9 +84,9 @@ ultra_belt_starting_side = {
 	scale = 0.5
 }
 
-ultra_belt_animation_set = {
+belt_animation_set = {
 	animation_set = {
-		filename = ultra_belt_filename,
+		filename = belt_filename,
 		priority = "extra-high",
 		width = 128,
 		height = 128,
@@ -101,7 +98,7 @@ ultra_belt_animation_set = {
 
 ------------------------------------
 
-function BetterBelts_addItem(baseName,thisName,thisOrder)
+function addItem(baseName,thisName,thisOrder)
 	local obj = util.table.deepcopy(data.raw["item"][baseName])
 	obj.name = BB.modName .. "_" .. thisName
 	obj.icon = BB.baseGraphicsIcons .. thisName .. ".png"
@@ -114,8 +111,9 @@ function BetterBelts_addItem(baseName,thisName,thisOrder)
 	data.raw[obj.type][obj.name] = obj
 end
 
-function BetterBelts_addRecipe(baseName,thisName,thisIngredients)
+function addRecipe(baseName,thisName,thisIngredients)
 	local obj = util.table.deepcopy(data.raw["recipe"][baseName])
+
 	obj.name = BB.modName .. "_" .. thisName
 	obj.enabled = false
 	obj.hidden = false
@@ -124,8 +122,9 @@ function BetterBelts_addRecipe(baseName,thisName,thisIngredients)
 	data.raw[obj.type][obj.name] = obj
 end
 
-function BetterBelts_addEntity_Belt(beltName,beltSpeed, relatedUndergroundBelt)
+function addEntity_Belt(beltName,beltSpeed, relatedUndergroundBelt)
 	local obj = util.table.deepcopy(data.raw["transport-belt"]["express-transport-belt"])
+
 	obj.name = BB.modName .. "_" .. beltName
 	obj.minable.result = obj.name
 
@@ -142,8 +141,9 @@ function BetterBelts_addEntity_Belt(beltName,beltSpeed, relatedUndergroundBelt)
 	data.raw["transport-belt"]["express-transport-belt"].next_upgrade = obj.name
 end
 
-function BetterBelts_addEntity_undergroundBelt(beltName,beltSpeed,beltMax_distance,mainName)
+function addEntity_undergroundBelt(beltName,beltSpeed,beltMax_distance,mainName)
 	local obj = util.table.deepcopy(data.raw["underground-belt"]["express-underground-belt"])
+
 	obj.name = BB.modName .. "_" .. beltName
 	obj.minable.result = obj.name
 
@@ -157,21 +157,22 @@ function BetterBelts_addEntity_undergroundBelt(beltName,beltSpeed,beltMax_distan
 	obj.structure.direction_in.sheet.filename = BB.baseGraphicsEntity .. mainName .. "-structure.png"
 	obj.structure.direction_out.sheet.filename = BB.baseGraphicsEntity .. mainName .. "-structure.png"
 
-	obj.belt_horizontal = ultra_belt_horizontal
-    obj.belt_vertical = ultra_belt_vertical
-    obj.ending_top = ultra_belt_ending_top
-    obj.ending_bottom = ultra_belt_ending_bottom
-    obj.ending_side = ultra_belt_ending_side
-    obj.starting_top = ultra_belt_starting_top
-    obj.starting_bottom = ultra_belt_starting_bottom
-    obj.starting_side = ultra_belt_starting_side
-	obj.belt_animation_set = ultra_belt_animation_set
+	obj.belt_horizontal = belt_horizontal
+    obj.belt_vertical = belt_vertical
+    obj.ending_top = belt_ending_top
+    obj.ending_bottom = belt_ending_bottom
+    obj.ending_side = belt_ending_side
+    obj.starting_top = belt_starting_top
+    obj.starting_bottom = belt_starting_bottom
+    obj.starting_side = belt_starting_side
+	obj.belt_animation_set = belt_animation_set
 
 	data.raw[obj.type][obj.name] = obj
 end
 
-function BetterBelts_addEntity_Loader(beltName,beltSpeed,beltMax_distance)
+function addEntity_Loader(beltName,beltSpeed,beltMax_distance)
 	local obj = util.table.deepcopy(data.raw["loader"]["express-loader"])
+
 	obj.name = BB.modName .. "_" .. beltName
 	obj.minable.result = obj.name
 	obj.flags = {"placeable-neutral", "player-creation"}
@@ -190,22 +191,23 @@ function BetterBelts_addEntity_Loader(beltName,beltSpeed,beltMax_distance)
     obj.structure.direction_out.sheet.height = 128
     obj.structure.direction_out.sheet.y = 128
 
-	obj.belt_horizontal = ultra_belt_horizontal
-    obj.belt_vertical = ultra_belt_vertical
-    obj.ending_top = ultra_belt_ending_top
-    obj.ending_bottom = ultra_belt_ending_bottom
-    obj.ending_side = ultra_belt_ending_side
-    obj.starting_top = ultra_belt_starting_top
-    obj.starting_bottom = ultra_belt_starting_bottom
-    obj.starting_side = ultra_belt_starting_side
-	obj.belt_animation_set = ultra_belt_animation_set
+	obj.belt_horizontal = belt_horizontal
+    obj.belt_vertical = belt_vertical
+    obj.ending_top = belt_ending_top
+    obj.ending_bottom = belt_ending_bottom
+    obj.ending_side = belt_ending_side
+    obj.starting_top = belt_starting_top
+    obj.starting_bottom = belt_starting_bottom
+    obj.starting_side = belt_starting_side
+	obj.belt_animation_set = belt_animation_set
 
 	data.raw[obj.type][obj.name] = obj
 	data.raw["loader"]["express-loader"].next_upgrade = obj.name
 end
 
-function BetterBelts_addEntity_Splitter(beltName,beltSpeed,beltMax_distance)
+function addEntity_Splitter(beltName,beltSpeed,beltMax_distance)
 	local obj = util.table.deepcopy(data.raw["splitter"]["express-splitter"])
+
 	obj.name = BB.modName .. "_" .. beltName
 	obj.minable.result = obj.name
 
@@ -226,22 +228,23 @@ function BetterBelts_addEntity_Splitter(beltName,beltSpeed,beltMax_distance)
 
 	obj.structure_patch = null
 
-	obj.belt_horizontal = ultra_belt_horizontal
-    obj.belt_vertical = ultra_belt_vertical
-    obj.ending_top = ultra_belt_ending_top
-    obj.ending_bottom = ultra_belt_ending_bottom
-    obj.ending_side = ultra_belt_ending_side
-    obj.starting_top = ultra_belt_starting_top
-    obj.starting_bottom = ultra_belt_starting_bottom
-    obj.starting_side = ultra_belt_starting_side
-	obj.belt_animation_set = ultra_belt_animation_set
+	obj.belt_horizontal = belt_horizontal
+    obj.belt_vertical = belt_vertical
+    obj.ending_top = belt_ending_top
+    obj.ending_bottom = belt_ending_bottom
+    obj.ending_side = belt_ending_side
+    obj.starting_top = belt_starting_top
+    obj.starting_bottom = belt_starting_bottom
+    obj.starting_side = belt_starting_side
+	obj.belt_animation_set = belt_animation_set
 
 	data.raw[obj.type][obj.name] = obj
 	data.raw["splitter"]["express-splitter"].next_upgrade = obj.name
 end
 
-function BetterBelts_addTechnology(thisName,thisIcon,thisType,thisEffect,thisPrerequisites,thisCount,thisIngredients,thisTime,thisOrder,className,modName)
+function addTechnology(thisName,thisIcon,thisType,thisEffect,thisPrerequisites,thisCount,thisIngredients,thisTime,thisOrder,className,modName)
 	local obj = util.table.deepcopy(data.raw["technology"]["steel-processing"])
+
 	obj.name = BB.modName .. "_" .. thisName
 
 	obj.icon = BB.baseGraphicsIcons .. thisIcon .. ".png"
@@ -286,38 +289,38 @@ function BetterBelts_addTechnology(thisName,thisIcon,thisType,thisEffect,thisPre
 			{"utility-science-pack", 1}
 		}
 	else
-		log(string.format("[BetterBelts_addTechnology]: thisIngredients=%d is not supported for thisName='%s'", thisIngredients, thisName))
+		log(string.format("[addTechnology]: thisIngredients=%d is not supported for thisName='%s'", thisIngredients, thisName))
 	end
 	obj.unit.time = thisTime
 	obj.order = thisOrder
 	data.raw[obj.type][obj.name] = obj
 end
 
-function BetterBelts_BeltClass(className,classSpeed)
+function addBeltClass(className,classSpeed)
 
-	BetterBelts_addItem("fast-transport-belt",className .. "-transport-belt","a[transport-belt]-d[" .. className .. "-transport-belt]")
-	BetterBelts_addRecipe("fast-transport-belt",className .. "-transport-belt",{{type="item", name="iron-gear-wheel", amount=5},{type="item", name="express-transport-belt", amount=2}})
-	BetterBelts_addEntity_Belt(className .. "-transport-belt",classSpeed, className .. "-underground-belt-v1")
-	BetterBelts_addItem("fast-underground-belt",className .. "-underground-belt-v1","b[underground-belt]-d[" .. className .. "-underground-belt-v1]")
-	BetterBelts_addItem("fast-underground-belt",className .. "-underground-belt-v2","b[underground-belt]-d[" .. className .. "-underground-belt-v2]")
-	BetterBelts_addItem("fast-underground-belt",className .. "-underground-belt-v3","b[underground-belt]-d[" .. className .. "-underground-belt-v3]")
-	BetterBelts_addRecipe("fast-underground-belt",className .. "-underground-belt-v1",{{type="item", name="iron-gear-wheel", amount=20},{type="item", name="express-underground-belt", amount=2}})
-	BetterBelts_addRecipe("fast-underground-belt",className .. "-underground-belt-v2",{{type="item", name="iron-gear-wheel", amount=20},{type="item", name="BetterBelts_" .. className .. "-underground-belt-v1", amount=2}})
-	BetterBelts_addRecipe("fast-underground-belt",className .. "-underground-belt-v3",{{type="item", name="iron-gear-wheel", amount=20},{type="item", name="BetterBelts_" .. className .. "-underground-belt-v2", amount=2}})
-	BetterBelts_addEntity_undergroundBelt(className .. "-underground-belt-v1",classSpeed,15,className .. "-underground-belt")
-	BetterBelts_addEntity_undergroundBelt(className .. "-underground-belt-v2",classSpeed,30,className .. "-underground-belt")
-	BetterBelts_addEntity_undergroundBelt(className .. "-underground-belt-v3",classSpeed,45,className .. "-underground-belt")
+	addItem("fast-transport-belt",className .. "-transport-belt","a[transport-belt]-d[" .. className .. "-transport-belt]")
+	addRecipe("fast-transport-belt",className .. "-transport-belt",{{type="item", name="iron-gear-wheel", amount=5},{type="item", name="express-transport-belt", amount=2}})
+	addEntity_Belt(className .. "-transport-belt",classSpeed, className .. "-underground-belt-v1")
+	addItem("fast-underground-belt",className .. "-underground-belt-v1","b[underground-belt]-d[" .. className .. "-underground-belt-v1]")
+	addItem("fast-underground-belt",className .. "-underground-belt-v2","b[underground-belt]-d[" .. className .. "-underground-belt-v2]")
+	addItem("fast-underground-belt",className .. "-underground-belt-v3","b[underground-belt]-d[" .. className .. "-underground-belt-v3]")
+	addRecipe("fast-underground-belt",className .. "-underground-belt-v1",{{type="item", name="iron-gear-wheel", amount=20},{type="item", name="express-underground-belt", amount=2}})
+	addRecipe("fast-underground-belt",className .. "-underground-belt-v2",{{type="item", name="iron-gear-wheel", amount=20},{type="item", name=BB.modName .. "_" .. className .. "-underground-belt-v1", amount=2}})
+	addRecipe("fast-underground-belt",className .. "-underground-belt-v3",{{type="item", name="iron-gear-wheel", amount=20},{type="item", name=BB.modName .. "_" .. className .. "-underground-belt-v2", amount=2}})
+	addEntity_undergroundBelt(className .. "-underground-belt-v1",classSpeed,15,className .. "-underground-belt")
+	addEntity_undergroundBelt(className .. "-underground-belt-v2",classSpeed,30,className .. "-underground-belt")
+	addEntity_undergroundBelt(className .. "-underground-belt-v3",classSpeed,45,className .. "-underground-belt")
 
-	BetterBelts_addItem("fast-splitter",className .. "-splitter","c[splitter]-d[" .. className .. "-splitter]")
-	BetterBelts_addRecipe("fast-splitter",className .. "-splitter",{{type="item", name="iron-gear-wheel", amount=10},{type="item", name="electronic-circuit", amount=15},{type="item", name="express-splitter", amount=2}})
-	BetterBelts_addEntity_Splitter(className .. "-splitter",classSpeed)
+	addItem("fast-splitter",className .. "-splitter","c[splitter]-d[" .. className .. "-splitter]")
+	addRecipe("fast-splitter",className .. "-splitter",{{type="item", name="iron-gear-wheel", amount=10},{type="item", name="electronic-circuit", amount=15},{type="item", name="express-splitter", amount=2}})
+	addEntity_Splitter(className .. "-splitter",classSpeed)
 
-	BetterBelts_addItem("fast-loader",className .. "-loader","d[loader]-d[" .. className .. "-loader]")
-	BetterBelts_addRecipe("fast-loader",className .. "-loader",{{type="item", name="BetterBelts_" .. className .. "-splitter", amount=1},{type="item", name="BetterBelts_" .. className .. "-transport-belt", amount=5}})
-	BetterBelts_addEntity_Loader(className .. "-loader",classSpeed)
+	addItem("fast-loader",className .. "-loader","d[loader]-d[" .. className .. "-loader]")
+	addRecipe("fast-loader",className .. "-loader",{{type="item", name=BB.modName .. "_" .. className .. "-splitter", amount=1},{type="item", name=BB.modName .. "_" .. className .. "-transport-belt", amount=5}})
+	addEntity_Loader(className .. "-loader",classSpeed)
 
 	classRecipes = {"-transport-belt","-underground-belt-v1","-underground-belt-v2","-underground-belt-v3","-splitter","-loader"}
-	BetterBelts_addTechnology(className .. "-class",className .. "-transport-belt","unlock-recipe",classRecipes,{"logistics-3"},150,4,30,"a",className,BB.modName)
+	addTechnology(className .. "-class",className .. "-transport-belt","unlock-recipe",classRecipes,{"logistics-3"},150,4,30,"a",className,BB.modName)
 end
 
 --activate again default loaders
@@ -334,4 +337,4 @@ data.raw["item"]["fast-loader"].hidden = false
 data.raw["item"]["express-loader"].flags = null
 data.raw["item"]["express-loader"].hidden = false
 
-BetterBelts_BeltClass("ultra",0.2)
+addBeltClass(BB.type, 0.2)

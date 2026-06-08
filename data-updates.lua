@@ -1,15 +1,18 @@
+---@type table<string,string> Mod information
+local BB = require("libs/bb")
+
 if deadlock then
 	deadlock.add_tier({
-		transport_belt      = "BetterBelts_ultra-transport-belt",
+		transport_belt      = BB.modName .. "_" .. BB.type .. "-transport-belt",
 		colour              = {r=0,g=211,b=37},
 		technology          = "logistics-3",
-		order				= "d",
-		loader				= "BetterBelts_ultra-deadlock-loader",
+		order               = "d",
+		loader              = BB.modName .. "_" .. BB.type .. "-deadlock-loader",
 		loader_ingredients  = {
 			{"express-transport-belt-loader",1},
 			{"iron-gear-wheel",40},
 		},
-		beltbox				= "BetterBelts_ultra-deadlock-beltbox",
+		beltbox             = BB.modName .. "_" .. BB.type .. "-deadlock-beltbox",
 		beltbox_ingredients = {
 			{"express-transport-belt-beltbox",1},
 			{"steel-plate",40},
@@ -18,8 +21,8 @@ if deadlock then
 		},
 		beltbox_technology  = "deadlock-stacking-3",
 	})
-	  
-	if data.raw.furnace["BetterBelts_ultra-transport-belt-beltbox"] then
-		data.raw.furnace["express-transport-belt-beltbox"].next_upgrade = "BetterBelts_ultra-transport-belt-beltbox"
+
+	if data.raw.furnace[BB.modName .. "_" .. BB.type .. "-transport-belt-beltbox"] then
+		data.raw.furnace["express-transport-belt-beltbox"].next_upgrade = BB.modName .. "_" .. BB.type .. "-transport-belt-beltbox"
 	end
 end
