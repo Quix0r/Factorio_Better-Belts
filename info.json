@@ -1,12 +1,12 @@
 {
   "name": "BetterBelts",
-  "version": "1.4.4",
-  "title": "Better Belts - Updated",
+  "version": "1.4.5",
+  "title": "Better Belts - 2.1+",
   "author": "roland77, DerMistkaefer, adcrafter27, LaVADraGoN, XiNaru",
   "homepage": "https://github.com/Quix0r/Factorio_Better-Belts",
   "description": "This Mod adds Better Belts and Loaders which run at a speed of 96 items/sec.",
-  "factorio_version": "2.0",
+  "factorio_version": "2.1",
   "dependencies": [
-    "base >= 2.0.60"
+    "base >= 2.1.24"
   ]
 }

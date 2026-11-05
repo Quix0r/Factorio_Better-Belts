@@ -1,4 +1,11 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.4.5
+Date: 2026-11-05
+  Changes:
+    - updated version of Factorio to 2.1
+    - added missing folder 'libs' (ops)
+    - local variables aren't hashed by Lua engine
+---------------------------------------------------------------------------------------------------
 Version: 1.4.4
 Date: 03.09.2025
   Changes:
